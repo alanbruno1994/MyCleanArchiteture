@@ -1,7 +1,8 @@
 import { IError } from "../../../../shared/IError";
+import { NotFound } from "../../../../shared/PatternStatusCode";
 
 export class ErrosCar {
   static errorCarNotFound() {
-    return new IError(500, "Not found car");
+    return new IError(NotFound, "Not found car");
   }
 }

@@ -1,7 +1,8 @@
 import { IError } from "../../../../shared/IError";
+import { NotFound } from "../../../../shared/PatternStatusCode";
 
 export class ErrosAccessProfile {
   static errorAccessProfileNotFound() {
-    return new IError(500, "Not found access profile");
+    return new IError(NotFound, "Not found access profile");
   }
 }

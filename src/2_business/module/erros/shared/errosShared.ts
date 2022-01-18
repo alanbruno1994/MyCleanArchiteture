@@ -1,26 +1,30 @@
 import { IError } from "../../../../shared/IError";
+import {
+  DataInvalid,
+  InternalServerError,
+} from "../../../../shared/PatternStatusCode";
 
 export class ErrosShared {
   static errorGenerateSecreteValeu() {
-    return new IError(500, "Not generate secret value");
+    return new IError(InternalServerError, "Not generate secret value");
   }
   static errorGenerateIdentifierService() {
-    return new IError(500, "Not generate identifier unique");
+    return new IError(InternalServerError, "Not generate identifier unique");
   }
 
   static errorNotSendEmail() {
-    return new IError(500, "Not send Email");
+    return new IError(InternalServerError, "Not send Email");
   }
 
   static errorNotPossibleComparer2Data() {
-    return new IError(500, "Not possible compare two data");
+    return new IError(InternalServerError, "Not possible compare two data");
   }
 
   static errorInternalServerError() {
-    return new IError(500, "Internal Server Error");
+    return new IError(InternalServerError, "Internal Server Error");
   }
 
   static errorValidateError(error: any) {
-    return new IError(400, "Error Validate", error);
+    return new IError(DataInvalid, "Error Validate", error);
   }
 }
