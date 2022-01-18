@@ -18,7 +18,10 @@ export type Input = Omit<
 >;
 
 @injectable()
-export class RegisterAccessProfileUseCase extends AbstractUseCase<Input> {
+export class RegisterAccessProfileUseCase extends AbstractUseCase<
+  Input,
+  Result
+> {
   constructor(
     @inject(IAccessProfileRepositorySymbol)
     private readonly accessRepository: IAccessProfileRepository,

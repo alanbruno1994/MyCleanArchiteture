@@ -10,7 +10,10 @@ import {
 } from "../../repositories/accessRepository";
 
 @injectable()
-export class UpdateUserUseCase extends AbstractUseCase<InputUpdate> {
+export class UpdateAccessProfileUseCase extends AbstractUseCase<
+  InputUpdate,
+  Result
+> {
   constructor(
     @inject(IAccessProfileRepositorySymbol)
     private readonly carRepository: IAccessProfileRepository
