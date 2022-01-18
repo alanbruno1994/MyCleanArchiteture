@@ -14,7 +14,7 @@ export type Input = Partial<
 >;
 
 @injectable()
-export class FindAllUserUseCase extends AbstractUseCase<Relation> {
+export class FindAllUserUseCase extends AbstractUseCase<Relation, Result> {
   constructor(
     @inject(IUserRepositorySymbol)
     private readonly userRepository: IUserRepository
@@ -22,7 +22,7 @@ export class FindAllUserUseCase extends AbstractUseCase<Relation> {
     super();
   }
 
-  async run(input: Relation): Promise<Result> {
+  async run(input: Relation = { name: [] }): Promise<Result> {
     try {
       return this.userRepository.findAll(input);
     } catch (Erro) {

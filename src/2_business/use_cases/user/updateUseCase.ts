@@ -13,12 +13,15 @@ import {
 import { IUserEnity } from "../../../1_domain/iEntityUser";
 import { ErrosShared } from "../../module/erros/shared/errosShared";
 
-export type Input = Partial<
+export type InputUpdateUser = Partial<
   Omit<IUserEnity, "id" | "createdAt" | "updatedAt" | "securedId">
 >;
 
 @injectable()
-export class UpdateUserUseCase extends AbstractUseCase<Input> {
+export class UpdateUserUseCase extends AbstractUseCase<
+  InputUpdateUser,
+  Result
+> {
   constructor(
     @inject(IUserRepositorySymbol)
     private readonly userRepository: IUserRepository,
@@ -27,7 +30,7 @@ export class UpdateUserUseCase extends AbstractUseCase<Input> {
     super();
   }
 
-  async run(input: Input, where: Where): Promise<Result> {
+  async run(input: InputUpdateUser, where: Where): Promise<Result> {
     try {
       const currentDate = new Date();
       let password;

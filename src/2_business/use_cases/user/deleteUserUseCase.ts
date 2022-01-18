@@ -6,15 +6,10 @@ import {
   IUserRepositorySymbol,
   Where,
 } from "../../repositories/userRepository";
-import { IUserEnity } from "../../../1_domain/iEntityUser";
 import { ErrosShared } from "../../module/erros/shared/errosShared";
 
-export type Input = Partial<
-  Omit<IUserEnity, "id" | "createdAt" | "updatedAt" | "securedId">
->;
-
 @injectable()
-export class DeleteUserUseCase extends AbstractUseCase<Where> {
+export class DeleteUserUseCase extends AbstractUseCase<Where, Result> {
   constructor(
     @inject(IUserRepositorySymbol)
     private readonly userRepository: IUserRepository
