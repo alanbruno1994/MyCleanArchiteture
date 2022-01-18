@@ -7,7 +7,7 @@ import { FindOneAccessProfileUseCase } from "../../../2_business/use_cases/acces
 import { ErrosShared } from "../../../2_business/module/erros/shared/errosShared";
 
 @injectable()
-export class RegisterControllerplayer extends AbstractController {
+export class RegisterControllerPlayer extends AbstractController {
   constructor(
     @inject(RegisterUserUseCase)
     private readonly registerUseCase: RegisterUserUseCase,
@@ -17,7 +17,10 @@ export class RegisterControllerplayer extends AbstractController {
     super();
   }
 
-  async run(input: InputCreateUser): Promise<Result> {
+  async run(
+    input: InputCreateUser,
+    metaDataImage: any = undefined
+  ): Promise<Result> {
     try {
       input.validate();
     } catch (error) {
@@ -30,10 +33,13 @@ export class RegisterControllerplayer extends AbstractController {
     if (isIError(access)) {
       return access;
     }
-    const value = await this.registerUseCase.run({
-      ...input,
-      accessProfileId: access.body.id,
-    });
+    const value = await this.registerUseCase.run(
+      {
+        ...input,
+        accessProfileId: access.body.id,
+      },
+      metaDataImage
+    );
     return value;
   }
 }
