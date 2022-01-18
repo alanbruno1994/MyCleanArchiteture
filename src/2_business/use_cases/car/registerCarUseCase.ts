@@ -9,7 +9,6 @@ import { ErrosShared } from "../../module/erros/shared/errosShared";
 import {
   ICarRepository,
   ICarRepositorySymbol,
-  InputCreate,
 } from "../../repositories/carRepository";
 import { ICarEntity } from "../../../1_domain/iEntityCar";
 
@@ -19,7 +18,7 @@ export type Input = Omit<
 >;
 
 @injectable()
-export class RegisterCarUseCase extends AbstractUseCase<Input> {
+export class RegisterCarUseCase extends AbstractUseCase<Input, Result> {
   constructor(
     @inject(ICarRepositorySymbol)
     private readonly carRepository: ICarRepository,
@@ -29,7 +28,7 @@ export class RegisterCarUseCase extends AbstractUseCase<Input> {
     super();
   }
 
-  async run(input: InputCreate): Promise<Result> {
+  async run(input: Input): Promise<Result> {
     try {
       const currentDate = new Date();
       const securedId = await this.uniqueIdentifierService.generate();

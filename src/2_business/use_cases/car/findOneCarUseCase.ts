@@ -9,7 +9,7 @@ import {
 } from "../../repositories/carRepository";
 
 @injectable()
-export class FindOneCarUseCase extends AbstractUseCase<InputFindOne> {
+export class FindOneCarUseCase extends AbstractUseCase<InputFindOne, Result> {
   constructor(
     @inject(ICarRepositorySymbol)
     private readonly carRepository: ICarRepository
