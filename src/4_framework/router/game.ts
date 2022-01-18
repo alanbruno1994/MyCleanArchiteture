@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { ControllerGameAdapter } from "../controllers/Game";
+const routerGame = Router();
+const game = new ControllerGameAdapter();
+routerGame.get("/game", game.findAll);
+routerGame.get("/game/:securedId", game.findOne);
+routerGame.post("/game", game.register);
+routerGame.put("/game/:securedId", game.update);
+routerGame.delete("/game/:securedId", game.delete);
+export default routerGame;
