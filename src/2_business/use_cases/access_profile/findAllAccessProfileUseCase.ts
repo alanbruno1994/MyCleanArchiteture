@@ -9,7 +9,10 @@ import {
 } from "../../repositories/accessRepository";
 
 @injectable()
-export class FindAllAccessProfileUseCase extends AbstractUseCase<Relation> {
+export class FindAllAccessProfileUseCase extends AbstractUseCase<
+  Relation,
+  Result
+> {
   constructor(
     @inject(IAccessProfileRepositorySymbol)
     private readonly userRepository: IAccessProfileRepository
@@ -17,7 +20,7 @@ export class FindAllAccessProfileUseCase extends AbstractUseCase<Relation> {
     super();
   }
 
-  async run(input: Relation): Promise<Result> {
+  async run(input: Relation = { name: [] }): Promise<Result> {
     try {
       return this.userRepository.findAll(input);
     } catch (Erro) {

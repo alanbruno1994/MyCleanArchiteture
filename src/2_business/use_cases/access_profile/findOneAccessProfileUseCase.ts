@@ -9,7 +9,10 @@ import {
 import { ErrosShared } from "../../module/erros/shared/errosShared";
 
 @injectable()
-export class FindOneAccessProfileUseCase extends AbstractUseCase<InputFindOne> {
+export class FindOneAccessProfileUseCase extends AbstractUseCase<
+  InputFindOne,
+  Result
+> {
   constructor(
     @inject(IAccessProfileRepositorySymbol)
     private readonly accessRepository: IAccessProfileRepository

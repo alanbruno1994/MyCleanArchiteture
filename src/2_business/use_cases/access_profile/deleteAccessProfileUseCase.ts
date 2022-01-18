@@ -9,7 +9,7 @@ import {
 } from "../../repositories/accessRepository";
 
 @injectable()
-export class DeleteAccessProfileUseCase extends AbstractUseCase<Where> {
+export class DeleteAccessProfileUseCase extends AbstractUseCase<Where, Result> {
   constructor(
     @inject(IAccessProfileRepositorySymbol)
     private readonly userRepository: IAccessProfileRepository
