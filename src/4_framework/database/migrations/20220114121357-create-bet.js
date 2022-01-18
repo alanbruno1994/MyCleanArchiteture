@@ -28,6 +28,8 @@ module.exports = {
           model: "users",
           key: "id",
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       game_id: {
         type: Sequelize.INTEGER,
@@ -36,6 +38,8 @@ module.exports = {
           model: "games",
           key: "id",
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       created_at: {
         allowNull: false,

@@ -33,6 +33,8 @@ module.exports = {
           model: "access_profiles",
           key: "id",
         },
+        onDelete: "CASCADE",
+        onUpdate: "CASCADE",
       },
       created_at: {
         allowNull: false,

@@ -11,6 +11,8 @@ module.exports = {
         model: "cars",
         key: "id",
       },
+      onDelete: "CASCADE",
+      onUpdate: "CASCADE",
     });
     await queryInterface.bulkInsert("cars", [
       {
