@@ -5,6 +5,5 @@ export interface IBetEntity extends Time {
   numberChoose: string;
   securedId: string;
   priceGame: number;
-  carId: number;
   userId: number;
 }
