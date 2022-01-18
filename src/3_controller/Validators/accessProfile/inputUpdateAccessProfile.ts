@@ -5,7 +5,7 @@ type Input = {
   level: string;
 };
 
-export class InputAccessUpdate extends AbstractValidator<Input> {
+export class InputAccessProfileUpdate extends AbstractValidator<Input> {
   @IsString()
   @MinLength(3)
   @IsOptional()
