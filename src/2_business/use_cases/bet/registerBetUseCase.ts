@@ -18,7 +18,7 @@ export type Input = Omit<
 >;
 
 @injectable()
-export class RegisterBetUseCase extends AbstractUseCase<Input> {
+export class RegisterBetUseCase extends AbstractUseCase<Input, Result> {
   constructor(
     @inject(IBetRepositorySymbol)
     private readonly carRepository: IBetRepository,

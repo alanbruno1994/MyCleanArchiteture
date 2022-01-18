@@ -9,7 +9,7 @@ import {
 } from "../../repositories/betRepository";
 
 @injectable()
-export class FindOneBetUseCase extends AbstractUseCase<InputFindOne> {
+export class FindOneBetUseCase extends AbstractUseCase<InputFindOne, Result> {
   constructor(
     @inject(IBetRepositorySymbol)
     private readonly betRepository: IBetRepository

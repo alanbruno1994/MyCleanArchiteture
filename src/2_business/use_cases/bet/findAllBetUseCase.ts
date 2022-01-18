@@ -9,7 +9,7 @@ import {
 } from "../../repositories/betRepository";
 
 @injectable()
-export class FindAllBetUseCase extends AbstractUseCase<Relation> {
+export class FindAllBetUseCase extends AbstractUseCase<Relation, Result> {
   constructor(
     @inject(IBetRepositorySymbol)
     private readonly betRepository: IBetRepository
@@ -17,7 +17,7 @@ export class FindAllBetUseCase extends AbstractUseCase<Relation> {
     super();
   }
 
-  async run(input: Relation): Promise<Result> {
+  async run(input: Relation = { name: [] }): Promise<Result> {
     try {
       return this.betRepository.findAll(input);
     } catch (Erro) {

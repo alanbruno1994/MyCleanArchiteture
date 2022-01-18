@@ -10,7 +10,7 @@ import {
 } from "../../repositories/betRepository";
 
 @injectable()
-export class UpdateBetUseCase extends AbstractUseCase<InputUpdate> {
+export class UpdateBetUseCase extends AbstractUseCase<InputUpdate, Result> {
   constructor(
     @inject(IBetRepositorySymbol)
     private readonly carRepository: IBetRepository
