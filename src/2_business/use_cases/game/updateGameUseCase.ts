@@ -10,7 +10,7 @@ import {
 } from "../../repositories/gameRepository";
 
 @injectable()
-export class UpdateGameUseCase extends AbstractUseCase<InputUpdate> {
+export class UpdateGameUseCase extends AbstractUseCase<InputUpdate, Result> {
   constructor(
     @inject(IGameRepositorySymbol)
     private readonly gameRepository: IGameRepository

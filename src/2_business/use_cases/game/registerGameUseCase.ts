@@ -18,7 +18,7 @@ export type Input = Omit<
 >;
 
 @injectable()
-export class RegisterGameUseCase extends AbstractUseCase<Input> {
+export class RegisterGameUseCase extends AbstractUseCase<Input, Result> {
   constructor(
     @inject(IGameRepositorySymbol)
     private readonly gameRepository: IGameRepository,

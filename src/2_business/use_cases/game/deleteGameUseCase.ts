@@ -9,7 +9,7 @@ import {
 } from "../../repositories/gameRepository";
 
 @injectable()
-export class DeleteGameUseCase extends AbstractUseCase<Where> {
+export class DeleteGameUseCase extends AbstractUseCase<Where, Result> {
   constructor(
     @inject(IGameRepositorySymbol)
     private readonly userRepository: IGameRepository
