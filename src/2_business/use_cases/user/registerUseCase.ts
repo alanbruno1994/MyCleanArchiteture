@@ -56,8 +56,12 @@ export class RegisterUserUseCase extends AbstractUseCase<
       if (isIError(password)) {
         return password;
       }
+      let result;
       if (metaDataImage) {
-        await this.uploadFile.upload(metaDataImage);
+        result = await this.uploadFile.upload(metaDataImage);
+        if (isIError(result)) {
+          return result;
+        }
       }
       if (securedId.body && password.body) {
         const user = await this.userRepository.create({
@@ -66,14 +70,14 @@ export class RegisterUserUseCase extends AbstractUseCase<
           password: password.body,
           createdAt: currentDate,
           updatedAt: currentDate,
+          image: result?.body ? result.body.name : undefined,
         });
         if (isIError(user)) {
-          console.log("a4");
           return user;
         }
         return user;
       } else {
-        throw new Error();
+        return ErrosShared.errorInternalServerError();
       }
     } catch (Erro) {
       return ErrosShared.errorInternalServerError();
