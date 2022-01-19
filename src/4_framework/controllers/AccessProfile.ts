@@ -10,6 +10,7 @@ import {
 import { InputAccessProfileCreate } from "../../3_controller/Validators/accessProfile/inputCreateAccessProfile";
 import { InputAccessProfileUpdate } from "../../3_controller/Validators/accessProfile/inputUpdateAccessProfile";
 import container from "../../shared/ioc/container";
+import { isIError } from "../../shared/Result";
 import { AbstractControllerAdapter } from "./abstractController";
 
 export class ControllerAccessProfileAdapter extends AbstractControllerAdapter {
@@ -19,7 +20,9 @@ export class ControllerAccessProfileAdapter extends AbstractControllerAdapter {
       const controller = container.get(RegisterControllerAccessProfile);
       const input = new InputAccessProfileCreate(req.body);
       const result = await controller.run(input, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -48,7 +51,9 @@ export class ControllerAccessProfileAdapter extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(FindOneControllerAccessProfile);
       const result = await controller.run(securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -64,7 +69,9 @@ export class ControllerAccessProfileAdapter extends AbstractControllerAdapter {
       const controller = container.get(UpdateControllerAccessProfile);
       const input = new InputAccessProfileUpdate(req.body);
       const result = await controller.run(input, securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -79,7 +86,9 @@ export class ControllerAccessProfileAdapter extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(DeleteControllerAccessProfile);
       const result = await controller.run(securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();

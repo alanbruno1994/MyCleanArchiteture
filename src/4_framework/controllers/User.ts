@@ -14,6 +14,7 @@ import {
   RegisterControllerPlayer,
   UpdateControllerUser,
 } from "../../3_controller/controller/user";
+import { isIError } from "../../shared/Result";
 @injectable()
 export class ControllerUserAdapter extends AbstractControllerAdapter {
   async register(
@@ -21,18 +22,42 @@ export class ControllerUserAdapter extends AbstractControllerAdapter {
     resp: Response,
     operation: string = "player"
   ): Promise<Response> {
+    const contentType = "" + req.headers["content-type"];
+    if (
+      contentType.match("multipart/form-data") &&
+      contentType.match("multipart/form-data")!.length > 0
+    ) {
+      if (req.body.carId) {
+        req.body.carId = +req.body.carId;
+      }
+      console.log("body  ", req.body);
+    }
     try {
+      const input = new InputCreateUser(req.body);
       if (operation === "admin") {
         const token = ("" + req.headers.authorization).replace("Bearer ", "");
         const controller = container.get(RegisterControllerAdmin);
-        const input = new InputCreateUser(req.body);
-        const result = await controller.run(input, token);
-        return resp.status(result.statusCode).send(result.body);
+        const result = await controller.run(
+          input,
+          token,
+          // @ts-ignore
+          req.files ? req.files.image : undefined
+        );
+        return resp
+          .status(result.statusCode)
+          .send(isIError(result) ? { mensagen: result.mensage } : result.body);
       } else {
+        const token = ("" + req.headers.authorization).replace("Bearer ", "");
         const controller = container.get(RegisterControllerPlayer);
-        const input = new InputCreateUser(req.body);
-        const result = await controller.run(input);
-        return resp.status(result.statusCode).send(result.body);
+        const result = await controller.run(
+          input,
+          token,
+          // @ts-ignore
+          req.files ? req.files.image : undefined
+        );
+        return resp
+          .status(result.statusCode)
+          .send(isIError(result) ? { mensagen: result.mensage } : result.body);
       }
     } catch (erro) {
       console.log(erro);
@@ -47,7 +72,9 @@ export class ControllerUserAdapter extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(FindAllControllerUser);
       const result = await controller.run(token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -62,7 +89,9 @@ export class ControllerUserAdapter extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(FindOneControllerUser);
       const result = await controller.run(securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -78,7 +107,9 @@ export class ControllerUserAdapter extends AbstractControllerAdapter {
       const controller = container.get(UpdateControllerUser);
       const input = new InputUpdateUser(req.body);
       const result = await controller.run(input, securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -93,7 +124,9 @@ export class ControllerUserAdapter extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(DeleteControllerUser);
       const result = await controller.run(securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
