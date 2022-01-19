@@ -1,10 +1,12 @@
-import { isIError, Result } from "../../../shared/Result";
+import { isIError, isSuccess, Result } from "../../../shared/Result";
 import { InputCreateUser } from "../../Validators/user/inputCreateUser";
 import { AbstractController } from "../abstractController";
 import { inject, injectable } from "inversify";
 import { RegisterUserUseCase } from "../../../2_business/use_cases/user/registerUseCase";
 import { FindOneAccessProfileUseCase } from "../../../2_business/use_cases/access_profile/findOneAccessProfileUseCase";
 import { ErrosShared } from "../../../2_business/module/erros/shared/errosShared";
+import { FindOneUserUseCase } from "../../../2_business/use_cases/user";
+import { ErrosUser } from "../../../2_business/module/erros/user/userErrors";
 
 @injectable()
 export class RegisterControllerPlayer extends AbstractController {
@@ -12,7 +14,9 @@ export class RegisterControllerPlayer extends AbstractController {
     @inject(RegisterUserUseCase)
     private readonly registerUseCase: RegisterUserUseCase,
     @inject(FindOneAccessProfileUseCase)
-    private readonly findOneAccessProfile: FindOneAccessProfileUseCase
+    private readonly findOneAccessProfile: FindOneAccessProfileUseCase,
+    @inject(FindOneUserUseCase)
+    private readonly findOneUser: FindOneUserUseCase
   ) {
     super();
   }
@@ -30,6 +34,13 @@ export class RegisterControllerPlayer extends AbstractController {
       where: { key: "level", valueKey: "player" },
     });
 
+    const testEmail = await this.findOneUser.run({
+      where: { key: "email", valueKey: input.email },
+    });
+
+    if (isSuccess(testEmail)) {
+      return ErrosUser.errorUserEmailIsAreadyUse();
+    }
     if (isIError(access)) {
       return access;
     }
