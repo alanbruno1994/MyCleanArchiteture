@@ -10,6 +10,7 @@ import {
 import { InputGameCreate } from "../../3_controller/Validators/game/inputCreateGame";
 import { InputUpdateGame } from "../../3_controller/Validators/game/inputUpdateGame";
 import container from "../../shared/ioc/container";
+import { isIError } from "../../shared/Result";
 import { AbstractControllerAdapter } from "./abstractController";
 
 export class ControllerGameAdapter extends AbstractControllerAdapter {
@@ -19,7 +20,9 @@ export class ControllerGameAdapter extends AbstractControllerAdapter {
       const controller = container.get(RegisterControllerGame);
       const input = new InputGameCreate(req.body);
       const result = await controller.run(input, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -33,7 +36,9 @@ export class ControllerGameAdapter extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(FindAllControllerGame);
       const result = await controller.run(token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -48,7 +53,9 @@ export class ControllerGameAdapter extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(FindOneControllerGame);
       const result = await controller.run(securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -64,7 +71,9 @@ export class ControllerGameAdapter extends AbstractControllerAdapter {
       const controller = container.get(UpdateControllerGame);
       const input = new InputUpdateGame(req.body);
       const result = await controller.run(input, securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -79,7 +88,9 @@ export class ControllerGameAdapter extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(DeleteControllerGame);
       const result = await controller.run(securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();

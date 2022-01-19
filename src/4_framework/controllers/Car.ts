@@ -10,6 +10,7 @@ import {
 import { InputCarCreate } from "../../3_controller/Validators/car/inputCreateCar";
 import { InputCarUpdate } from "../../3_controller/Validators/car/inputUpdateCar";
 import container from "../../shared/ioc/container";
+import { isIError } from "../../shared/Result";
 import { AbstractControllerAdapter } from "./abstractController";
 
 export class ControllerCar extends AbstractControllerAdapter {
@@ -19,7 +20,9 @@ export class ControllerCar extends AbstractControllerAdapter {
       const controller = container.get(RegisterControllerCar);
       const input = new InputCarCreate(req.body);
       const result = await controller.run(input, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -33,7 +36,9 @@ export class ControllerCar extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(FindAllControllerCar);
       const result = await controller.run(token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -48,7 +53,9 @@ export class ControllerCar extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(FindOneControllerCar);
       const result = await controller.run(securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -64,7 +71,9 @@ export class ControllerCar extends AbstractControllerAdapter {
       const controller = container.get(UpdateControllerCar);
       const input = new InputCarUpdate(req.body);
       const result = await controller.run(input, securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
@@ -79,7 +88,9 @@ export class ControllerCar extends AbstractControllerAdapter {
       const token = ("" + req.headers.authorization).replace("Bearer ", "");
       const controller = container.get(DeleteControllerCar);
       const result = await controller.run(securedId, token);
-      return resp.status(result.statusCode).send(result.body);
+      return resp
+        .status(result.statusCode)
+        .send(isIError(result) ? { mensagen: result.mensage } : result.body);
     } catch (erro) {
       console.log(erro);
       const error = ErrosShared.errorInternalServerError();
