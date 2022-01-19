@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      secure_id: {
+      secured_id: {
         type: Sequelize.UUID,
         allowNull: false,
         unique: true,

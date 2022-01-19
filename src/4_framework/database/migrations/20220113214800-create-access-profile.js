@@ -11,7 +11,7 @@ module.exports = {
       level: {
         type: Sequelize.STRING,
       },
-      secure_id: {
+      secured_id: {
         type: Sequelize.STRING,
       },
       created_at: {
