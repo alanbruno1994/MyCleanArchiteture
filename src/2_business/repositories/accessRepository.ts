@@ -15,6 +15,7 @@ export type Where = {
 export type InputFindOne = {
   where: Where;
   relation?: Relation;
+  attributes?: string[];
 };
 
 export interface IAccessProfileRepository {
