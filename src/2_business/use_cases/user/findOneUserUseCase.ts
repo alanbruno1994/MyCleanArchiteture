@@ -19,7 +19,7 @@ export class FindOneUserUseCase extends AbstractUseCase<InputFindOne, Result> {
 
   async run(input: InputFindOne): Promise<Result> {
     try {
-      return this.userRepository.findOne(input);
+      return await this.userRepository.findOne(input);
     } catch (Erro) {
       return ErrosShared.errorInternalServerError();
     }
