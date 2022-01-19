@@ -6,7 +6,10 @@ import {
   RegisterAccessProfileUseCase,
   UpdateAccessProfileUseCase,
 } from "../../2_business/use_cases/access_profile";
-import { LoginUseCase, VerifyUseCase } from "../../2_business/use_cases/auth";
+import {
+  TokenLoginUseCase,
+  VerifyUseCase,
+} from "../../2_business/use_cases/auth";
 import {
   DeleteBetUseCase,
   FindAllBetUseCase,
@@ -44,7 +47,7 @@ export const useCaseModule = new ContainerModule((bind: interfaces.Bind) => {
   bind(RegisterAccessProfileUseCase).to(RegisterAccessProfileUseCase);
   bind(UpdateAccessProfileUseCase).to(UpdateAccessProfileUseCase);
 
-  bind(LoginUseCase).to(LoginUseCase);
+  bind(TokenLoginUseCase).to(TokenLoginUseCase);
   bind(VerifyUseCase).to(VerifyUseCase);
 
   bind(DeleteBetUseCase).to(DeleteBetUseCase);

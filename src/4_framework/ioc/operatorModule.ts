@@ -6,6 +6,7 @@ import {
   RegisterControllerAccessProfile,
   UpdateControllerAccessProfile,
 } from "../../3_controller/controller/access";
+import { LoginController } from "../../3_controller/controller/auth/LoginController";
 import {
   DeleteControllerBet,
   FindAllControllerBet,
@@ -63,4 +64,5 @@ export const operatorModule = new ContainerModule((bind: interfaces.Bind) => {
   bind(FindOneControllerAccessProfile).to(FindOneControllerAccessProfile);
   bind(RegisterControllerAccessProfile).to(RegisterControllerAccessProfile);
   bind(UpdateControllerAccessProfile).to(UpdateControllerAccessProfile);
+  bind(LoginController).to(LoginController);
 });
