@@ -9,7 +9,7 @@ import { Game } from "./game";
 // Tem Relacao 1(User) tem 1(AcessProfile)
 // 1 User tem N(Games)
 // 1 User tem 1 Car
-export class User extends Model<any> {}
+export class User extends Model {}
 User.init(
   {
     name: DataTypes.STRING,
