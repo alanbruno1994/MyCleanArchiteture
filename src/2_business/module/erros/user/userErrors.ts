@@ -1,9 +1,17 @@
 import { IError } from "../../../../shared/IError";
-import { NotAuhtorized, NotFound } from "../../../../shared/PatternStatusCode";
+import {
+  DataInvalid,
+  NotAuhtorized,
+  NotFound,
+} from "../../../../shared/PatternStatusCode";
 
 export class ErrosUser {
   static errorUserNotFound() {
     return new IError(NotFound, "Not found user");
+  }
+
+  static errorUserEmailIsAreadyUse() {
+    return new IError(DataInvalid, "Email is already in use!");
   }
 
   static errorUserNotFoundMiddlewareAccess() {
